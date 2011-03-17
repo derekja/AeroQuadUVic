@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>UVic Mechatronics - Quadcopter Pilot Project</title>
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+<div id="wrapper"><!-- #wrapper -->
+
+	<nav><!-- top nav -->
+		<div class="menu">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Build Log</a></li>
+			</ul>
+		</div>
+	</nav><!-- end of top nav -->
+	
+	<header><!-- header -->
+		<div id="headerlogo"><img src="images/stirofoam_frame1_300x300.png" alt="" /></div>
+		<h1><a href="#">UVic Quadcopter</a></h1>
+		<h2>A pilot project for mechatronics course @UVic</h2>
+	</header><!-- end of header -->
+	
+	<section id="main">
+		<aside id="sidebar1"><!-- sidebar1 -->
+				<h3>Things To Do</h3>
+					<ul>
+						<li>add highlights and pictures on this side</li>
+						<br/>
+						<li>Figure out radio communication (Aras)</li>
+						<li>Figure out how to use 9D sensor (Derek)</li>
+						<li>Upload AQ Code</li>
+						<li></li>
+					</ul>
+
+		</aside><!-- end of sidebar1 -->
+
+			<section id="content"><!-- #content -->
+			
+			<article>
+			<h1>Quadcopter Build Log</h1>
+			<p>This document captures all the relevant efforts that were made in construction of this quadcopter project. The timeframe of the project is January 2011 to April2011. 
+
+			<!--TODO: The content list for this page will go here -->
+			</p>
+
+			</article>
+
+			<article>
+			<h2><a href="#">Hardware</a></h2>
+			<h3>Controller</h3>
+			<p>Arduino platform is selected for this project, mainly due to its open software and hardware nature which has reslted in availability of extensive technical information. As a result there are many tutorials and example project available for this platform. A list of arduino boards can be found <a href="http://arduino.cc/en/Main/Boards">here</a>. Many of these boards including <i>Arduino Uno</i> and <i>Arduino Mega</i> are perfectly capable of flying a quad copter. In this project, the Arduino compatible <a href="http://www.seeedstudio.com/depot/seeeduino-v221-atmega-328p-p-669.html?cPath=80&zenid=ddc5e83a38550b702d7aeebbb94512a5">Seeeduino</a> board is used; specifically, <i>Seeeduino Mega v1.1</i> mainly since it was available at hand.</p>
+
+			<h3>Schematic</h3>
+			<img src="images/" alt="Schematic showing all electronic components of the system and how they are connected. " class="alignleft" /><p></p>
+			<br/>
+			<h3>Brushless Motor</h3>
+			<p></p>
+
+			<h3>Electronic Speed Controller</h3>
+			<p></p>
+
+			<h3>Propeller (Prop)</h3>
+			<p>The initial propeller attempt was a 4.5x4.5E two bladed propeller. This is well below the motor specification size recommended on the website of the supplier, which called for a 7x5E propeller. The motors would not even spin this large propeller, though, so it can only be concluded that the website specification is incorrect.
+
+The propeller tests were completed by attaching the airframe and motors to a weight, and placing this weight on a scale. The weight used was approximately the diameter of the arduino board, so airflow characteristics should be comparable to those during flight. The initial weight of the airframe, motors, arduino, ESCs, battery monitor, plus the weight, was 1763g. This was well above what the motors could be expected to lift, so the total lift was calculated as the difference between initial weight (with the motors stopped) and final weight (with the motors at full power.)
+
+Initial weight at 4.5x4.5E 1763g final weight 1400g
+
+for a total thrust of 363g. This quickly falls off as the battery drains, so subsequent tests are to be completed only on a fully charged battery.
+
+For additional test propellers, in most cases there is only a single propeller available. It is not feasible to run only one motor, because the tether to the weight is fixed and a single motor does not provide lift as much as it simply changes the balance and threatens to topple the weight. To address this, additional propeller tests are accomplished by means of running two opposing motors, but with only one new propeller attached. Since the difference in thrust of a propeller change will be a fractional proportion of the total lift, the lowest final weight will be presumed to be the propeller with most lift.
+
+First, the original 4.5x4.5E propellers are run in this configuration
+
+Initial weight at 4.5x4.5E 1763g final weight, two motors 1547g thrust = 216g
+
+Next, one of the propeller was replaced with a 8x4.5E two bladed propeller.
+
+    * PROBLEM* one of the 8x4.5 props is contra-rotating! It pushes down. Had to try the other prop. 
+
+Initial weight 1765g final weight 1532g thrust = 233g
+
+Not that much benefit and we can't actually use 4 8 inch props on the current frame because they will interfere with each other.
+
+Next, one propeller was replaced with a 3 bladed 5 inch with less pitch (labelled GWS EP-5030x3)
+
+initial weight 1762g final weight 1515g thrust = 247g
+
+Next the orange 6 inch propeller was run (GWS EP-6030)
+
+initial weight 1766g final weight 1530g thrust = 236g
+
+Of course, there is a confound between prop size and pitch. It is unknown what a 4.5 pitch 6 inch prop would do, and since the specification cannot be trusted, it is unclear which is preferred by this motor.
+
+Finally, the GWS EP-4025 was run.
+
+Initial weight 1765g final weight 1536g thrust = 229g
+
+The 5 inch 3-blade propeller seems to be the best performer for the size. The shallower pitch also seems to be an advantage. It is possible that these motors simply do not have sufficient torque to drive a higher pitch propeller.
+
+Final configuration: 4 3 bladed 5 inch props with a 3.0 inch pitch. Model GWS EP-5030x3
+
+Initial weight 1758g final weight 1290g (first pulse, quickly drops to around 1370g sustained) thrust = 468g (peak) 388g (sustained)
+
+The goal is to get to lift capability with a maximum of 90% of motor thrust for a sustained period so that the remaining 10% of capacity can be used for manoeuvring. This will be documented in the battery section. </p>
+
+			<h3>Battery</h3>
+			<p>
+			A <i>Rhino 610mAh 3S 11.1v 20C Lipoly Pack</i> is used that was purchase from <a href="http://hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=7308">hobby king</a>. Below are the specifications of this battery:
+			<!--TODO: add table with battery specs -->
+
+			<br />
+			<h4>Battery Monitor</h4>
+		To monitor the state of battery during flight and avoid accident that may be caused by running out of battery in middle of a flight, a battery monitor is necessary. A <a href"http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=7223">Hobby King Battery Monitor 3S</a> is used for this purpose. The battery monitor lights blue when it recieved above 11,0V, at 10,0-11,0V it blinks blue, under 10,0V it lights red, and when below 9,8V it beeps and blinks red.
+		<br />
+		<br />
+		<h4>Running Time</h4>
+With the 5 in. 3 blade propellers, a trial was made with the motors at 90% capacity. At this rate of discharge it takes 9 minutes to go from a full charge to a sustained low battery warning from the battery monitor. During that 9 minutes, the 90% motor lift capacity drops from 288g to 243g.
+<br />
+Recharge of the batteries from a full discharge at 1.6A takes approximately 30 minutes.
+<br />
+<br />
+<h4>Battery Charger</h4>
+</p>
+
+			<h3>Sensor</h3>
+			<p>A 9 degree of freedom sensor, which is a board with a magnetometer, accelerometer, and gyro is used on this quadcopter. </p>
+
+			</article>
+						
+        		<article>
+			<h2><a href="#">Software</a></h2>
+			<p></p>
+
+			<h3>Testing ESC and Brushless Motor</h3>
+			<p>The four brushless motors on the quadcopter are controlled via an electronic speed controller each. <a href="https://github.com/arasbm/AeroQuadUVic/blob/master/tests/test_four_esc_keyboard.pde">Here</a> is a minimal sketch that uses servo library to control four ESC and the motors connected to them using keyboard. The charachters pressed on the keyboard are passed to Arduino board on the quadcopter via a serial connection. The instruction on how to use this code are documented inside the sketch. </p>
+
+			</article>
+						
+			</section><!-- end of #content -->
+
+			<aside id="sidebar2"><!-- sidebar2 -->
+			<br/>
+			<br/>
+			<br/>
+				<h3>Quadcopter Resources</h3>
+					<ul>
+						<li><a href="http://aeroquad.com/">Aeroquad</a></li>
+						<li><a href="#"></a></li>
+					</ul>
+				<h3>Other Useful Resources</h3>
+					<ul>
+						<li><a href="http://arduino.cc/en/">Arduino Home</a></li>
+						<li><a href="#">Nulla quis</a></li>
+					</ul>
+
+				<h3>Code Repositories</h3>
+					<ul>
+						<li><a href="git@github.com:arasbm/AeroQuadUVic">Aeroquad at UVic</a></li>
+						<li><a href="https://github.com/AeroQuad/AeroQuad">Official Aeroquad Repo</a></li>
+						<li><a href="#"></a></li>
+					</ul>
+
+				<h3>Related Websites</h3>
+					<ul>
+						<li><a href="http://www.mechatronics.engr.uvic.ca/Main-Page.html">Mechatronics at UVic</a></li>
+						<li><a href="http://www.csc.uvic.ca/">Computer Science at UVic</a></li>
+					</ul>
+
+				
+		</aside><!-- end of sidebar -->
+
+	</section><!-- end of #main content and sidebar-->
+	
+		<footer>
+		<section id="footer-area">
+
+			<section id="footer-outer-block">
+					<aside class="footer-segment">
+						
+						
+					</aside>
+
+					
+					<aside class="footer-segment">
+					<!--TODO: add copyright and such in footnote -->
+							<h4>Footnote</h4>
+								<p>&copy; 2011 <a href="#"></a> </p>
+					</aside><!-- end of #fourth footer segment -->
+
+			</section><!-- end of footer-outer-block -->
+
+		</section><!-- end of footer-area -->
+	</footer>
+</div><!-- #wrapper -->
+<!-- Free template created by http://freehtml5templates.com -->
+</body>
+</html>

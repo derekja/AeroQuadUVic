@@ -1,0 +1,258 @@
+/* Created by http://freehtml5templates.com */
+
+/* reset */
+* {
+margin: 0;
+padding: 0;
+}
+
+/* render html5 elements as block */
+header, footer, section, aside, nav, article {
+display: block;
+}
+
+body {
+line-height: 1;
+background: #ddd url("images/bg.gif") repeat;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+color: #fff;
+font-size: 14px;
+line-height: 18px;
+}
+	
+/* layout */
+
+#wrapper {
+position: relative;
+width: 940px;
+margin: 0 auto;
+margin-top: 5px;
+margin-bottom: 5px;
+-webkit-box-shadow: 3px 3px 7px #777;
+-moz-box-shadow: 3px 3px 7px #777;
+}
+
+nav {
+width: 940px;
+height: 50px;
+margin: 0 auto;
+background: #000;
+}
+
+header {
+width: 940px;
+height: 200px;
+margin: 0 auto;
+background: #fff url(images/orangredglow.jpg) no-repeat left top;
+}
+
+#main {
+width: 940px;
+margin: 0 auto;
+padding-top: 30px;
+background: #FFF url(images/colbg1.png) repeat-y;
+overflow: hidden;
+}
+
+#content {
+float: left;
+width: 450px;
+margin-left: 40px;
+}
+
+#sidebar1 {
+float: left;
+padding-left: 20px;
+width: 180px;
+}
+
+#sidebar2 {
+float: right;
+padding-right: 30px;
+width: 180px;
+}
+
+footer {
+width: 940px;
+margin: 0 auto;
+clear: both;
+}
+
+/* basics */
+
+@font-face {
+	font-family: 'ChunkFiveRegular';
+	src: url('Chunkfive-webfont.eot');
+	src: local('ChunkFiveRegular'), url('Chunkfive-webfont.woff') format('woff'), url('Chunkfive-webfont.ttf') format('truetype'), url('Chunkfive-webfont.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+h1,h2,h3,h4,h5,h6 {
+font-weight: bold;
+clear: both;
+color: #ddd;
+}
+
+a:link, a:visited {
+color:#ffa314;
+}
+
+a:hover, a:active {
+color: #ff5500;
+}
+
+p {
+margin-bottom: 18px;
+}
+
+li {
+padding-left: 5px;
+}
+
+/* nav */
+
+nav .menu {
+font-size: 16px;
+font-weight: bold;
+}
+
+nav .menu ul {
+margin: 0;
+padding: 17px 0 0 20px;
+list-style: none;
+line-height: normal;
+}
+
+nav .menu li {
+display: block;
+float: left;
+}
+
+nav .menu a {
+display: block;
+float: left;
+margin-right: 5px;
+padding: 0px 15px;
+text-decoration: none;
+color: #ffa314;
+}
+
+nav .menu a:hover {
+text-decoration: underline;
+}
+
+/** HEADER */
+
+header h1, header h2 {
+margin: 0;
+padding: 0 0 0 30px;
+line-height: normal;
+}
+
+header h1 { 	
+float: left;
+padding-top: 20px; 
+font-size: 50px;
+font-family: 'ChunkFiveRegular', Verdana, Arial, Helvetica, sans-serif;
+}
+
+header h1 a:link, header h1 a:visited {
+text-decoration: none;
+color: #000;
+}
+
+header h1 a:hover { 
+text-decoration: underline; 
+}
+
+header h2 {
+padding: 20px 0 0 30px;
+font-style: italic;
+font-size: 14px;
+color: #555;
+}
+
+#headerlogo {
+position: absolute;
+top:40px;
+right: 43px;
+}
+
+/** ARTICLES **/
+article img {
+border: none;
+-webkit-box-shadow: 3px 3px 7px #777;
+-moz-box-shadow: 3px 3px 7px #777;
+}
+
+#content p, ul, ol, hr {
+margin-bottom: 24px;
+}
+
+#content ul ul, ol ol, ul ol, ol ul {
+margin-bottom: 0;
+}
+
+#content h1, h2, h3, h4, h5, h6 {
+color: #ddd;
+margin: 0 0 20px 0;
+line-height: 1.5em;
+}
+
+.alignleft, img.alignleft {
+display: inline;
+float: left;
+margin-right: 10px;
+}
+
+.alignright, img.alignright {
+display: inline;
+float: right;
+margin-left: 10px;
+}
+
+.aligncenter, img.aligncenter {
+clear: both;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+/* sidebar and footer widget blocks */
+
+aside h3 {
+font-size: 18px;
+}
+
+aside ul {
+list-style: none;
+margin-bottom: 20px;
+margin-top: -15px;
+}
+
+#footer-area {
+background: #000;
+border-top: 1px #ffa314 solid;
+color: #FFF;
+font-size: 90%;
+padding: 18px 0;
+overflow: hidden;
+}
+
+.footer-segment {
+float: left;
+margin-right: 20px;
+margin-left: 20px;
+width: 190px;
+}
+
+footer aside h4 {
+color: #ddd;
+font-size: 16px;
+line-height: 1.5em;
+}
+
+footer p {
+margin-top: -15px;
+}

@@ -67,78 +67,83 @@
 			We use four brushless DC motors, specifically this motor. 
 			Brushless motors are suitable for this project since they deliver much higher revolutions per minute (RPM). 
 			Since they dont use brush to deliver current to the shaft, there is much less friction; therefore, they are much more efficient and can produce more torque. 
-
 			</p>
 
 			<h3>Electronic Speed Controller (ESC)</h3>
-			<p>Four <i>plush 6amp brushless speed controllers</a> (Plush 6A) are used in this project.
+			<p>Four <i>plush 6amp brushless speed controllers </i> (Plush 6A) are used in this project.
 			<h4>Direction of rotation</h4>
 			The three wires from brushless motor can be connected to the three output wires of the speed controller in any order. 
 			However, reversing the direction of rotation of the motor is done by <strong>switching any two of these three wires</strong>. 
-			Therefore, it is a good idea to find a right order buy temporary connecting the wires and checking the rotation of motor.
+			Therefore, it is a good idea to find a right order by temporary connecting the wires and checking the rotation of motor.
 			The input signal to the brushless motor only defines the power at which the motor should operate or its RPM, but not the direction.
 			The signal that is needed by the ESC is equivalent to that of a servo motor.
 			Therefore the servo library can be used to operate an ESC using an arduino board.
-			The image below shows the charachteristics of this input signal to the ESC captures by an oscilloscope while the brushless motor is operating at about 70 percent power.
-			<a href="images/ESC_Input_Signal.JPG"><img src="images/ESC_Input_Signal_thumbnail.jpeg" width="256" height="192" alt="esc input signal captured by oscilloscope" /></a>
+			The image below shows the characteristics of this input signal to the ESC as captured by an oscilloscope while the brushless motor is operating with 70 percent power.
+			<br />			
 			<br />
-			The video below shows a simple test of driving a brushless motor with an ESC.<br />
-			<iframe title="Testing a brushless motor" width="425" height="349" src="http://www.youtube.com/embed/SB0L5wSDu6s" frameborder="0" allowfullscreen></iframe>			
+			<a href="images/ESC_Input_Signal.JPG"><img src="images/ESC_Input_Signal_thumbnail.jpeg" width="256" height="192" alt="esc input signal captured by oscilloscope" class="aligncenter"><center>Input signal to an ESC</center></img></a>
+			<br />
+			<br />
+			The video below shows a simple test of driving a brushless motor with an ESC.
+			<br />
+			<iframe title="Testing a brushless motor" width="425" height="349" src="http://www.youtube.com/embed/SB0L5wSDu6s" frameborder="0" allowfullscreen></iframe>
+			<br />			
 			</p>
-
+			<br />
 			<h3>Propeller (Prop)</h3>
-			<p>The initial propeller attempt was a 4.5x4.5E two bladed propeller. This is well below the motor specification size recommended on the website of the supplier, which called for a 7x5E propeller. The motors would not even spin this large propeller, though, so it can only be concluded that the website specification is incorrect.
-
+			<p>The initial propeller attempt was a 4.5x4.5E two bladed propeller. This is well below the motor specification size recommended on the website of the supplier, which called for a 7x5E propeller. 
+			The motors would not even spin this large propeller, though, so it can only be concluded that the website specification is incorrect.
 			The propeller tests were completed by attaching the airframe and motors to a weight, and placing this weight on a scale. 
 			The weight used was approximately the diameter of the arduino board, so airflow characteristics should be comparable to those during flight. 
 			The initial weight of the airframe, motors, arduino, ESCs, battery monitor, plus the weight, was 1763g. 
 			This was well above what the motors could be expected to lift, so the total lift was calculated as the difference between initial weight (with the motors stopped) and final weight (with the motors at full power.) 
 			Here is a video demonstrating a test using this technique:
+			<br />
 			<iframe title="Testing the lift force" width="425" height="349" src="http://www.youtube.com/embed/ZpDpEkwurGo" frameborder="0" allowfullscreen></iframe>
-Initial weight at 4.5x4.5E 1763g final weight 1400g
-<br />
-for a total thrust of 363g. This quickly falls off as the battery drains, so subsequent tests are to be completed only on a fully charged battery.
-<br />
-For additional test propellers, in most cases there is only a single propeller available. 
-It is not feasible to run only one motor, because the tether to the weight is fixed and a single motor does not provide lift as much as it simply changes the balance and threatens to topple the weight. 
-To address this, additional propeller tests are accomplished by means of running two opposing motors, but with only one new propeller attached. 
-Since the difference in thrust of a propeller change will be a fractional proportion of the total lift, the lowest final weight will be presumed to be the propeller with most lift.
-<br />
-First, the original 4.5x4.5E propellers are run in this configuration.
-<!--TODO: add a picture of this props -->
-Initial weight at 4.5x4.5E 1763g final weight, two motors 1547g thrust = 216g
-
-Next, one of the propeller was replaced with a 8x4.5E two bladed propeller.
-
-    * PROBLEM* one of the 8x4.5 props is contra-rotating! It pushes down. Had to try the other prop. 
-
-Initial weight 1765g final weight 1532g thrust = 233g
-<br />
-Not that much benefit and we can't actually use 4 8 inch props on the current frame because they will interfere with each other.
-<br />
-Next, one propeller was replaced with a 3 bladed 5 inch with less pitch (labelled GWS EP-5030x3)
-<br />
-initial weight 1762g final weight 1515g thrust = 247g
-<br />
-Next the orange 6 inch propeller was run (GWS EP-6030)
-initial weight 1766g final weight 1530g thrust = 236g
-Of course, there is a confound between prop size and pitch. 
-It is unknown what a 4.5 pitch 6 inch prop would do, and since the specification cannot be trusted, it is unclear which is preferred by this motor.
-<br />
-Finally, the GWS EP-4025 was run.
-
-Initial weight 1765g final weight 1536g thrust = 229g
-<br />
-The 5 inch 3-blade propeller seems to be the best performer for the size. The shallower pitch also seems to be an advantage. 
-It is possible that these motors simply do not have sufficient torque to drive a higher pitch propeller.
-<br />
-<h4>Final Configuration</h4> 
-Four 3 bladed 5 inch props with a 3.0 inch pitch. Model GWS EP-5030x3
-Initial weight 1758g final weight 1290g (first pulse, quickly drops to around 1370g sustained) thrust = 468g (peak) 388g (sustained)
-The goal is to get to lift capability with a maximum of 90% of motor thrust for a sustained period so that the remaining 10% of capacity can be used for manoeuvring. 
-This will be documented in the battery section. </p>
-<br />
-<br />
+		Initial weight at 4.5x4.5E 1763g final weight 1400g
+		<br />
+		for a total thrust of 363g. This quickly falls off as the battery drains, so subsequent tests are to be completed only on a fully charged battery.
+		<br />
+		For additional test propellers, in most cases there is only a single propeller available. 
+		It is not feasible to run only one motor, because the tether to the weight is fixed and a single motor does not provide lift as much as it simply changes the balance and threatens to topple the weight. 
+		To address this, additional propeller tests are accomplished by means of running two opposing motors, but with only one new propeller attached. 
+		Since the difference in thrust of a propeller change will be a fractional proportion of the total lift, the lowest final weight will be presumed to be the propeller with most lift.
+		<br />
+		First, the original 4.5x4.5E propellers are run in this configuration.
+		<!--TODO: add a picture of this props -->
+		Initial weight at 4.5x4.5E 1763g final weight, two motors 1547g thrust = 216g
+		
+		Next, one of the propeller was replaced with a 8x4.5E two bladed propeller.
+		
+		    * PROBLEM* one of the 8x4.5 props is contra-rotating! It pushes down. Had to try the other prop. 
+		
+		Initial weight 1765g final weight 1532g thrust = 233g
+		<br />
+		Not that much benefit and we can't actually use 4 8 inch props on the current frame because they will interfere with each other.
+		<br />
+		Next, one propeller was replaced with a 3 bladed 5 inch with less pitch (labelled GWS EP-5030x3)
+		<br />
+		initial weight 1762g final weight 1515g thrust = 247g
+		<br />
+		Next the orange 6 inch propeller was run (GWS EP-6030)
+		initial weight 1766g final weight 1530g thrust = 236g
+		Of course, there is a confound between prop size and pitch. 
+		It is unknown what a 4.5 pitch 6 inch prop would do, and since the specification cannot be trusted, it is unclear which is preferred by this motor.
+		<br />
+		Finally, the GWS EP-4025 was run.
+		
+		Initial weight 1765g final weight 1536g thrust = 229g
+		<br />
+		The 5 inch 3-blade propeller seems to be the best performer for the size. The shallower pitch also seems to be an advantage. 
+		It is possible that these motors simply do not have sufficient torque to drive a higher pitch propeller.
+		<br />
+		<h4>Final Configuration</h4> 
+		Four 3 bladed 5 inch props with a 3.0 inch pitch. Model GWS EP-5030x3
+		Initial weight 1758g final weight 1290g (first pulse, quickly drops to around 1370g sustained) thrust = 468g (peak) 388g (sustained)
+		The goal is to get to lift capability with a maximum of 90% of motor thrust for a sustained period so that the remaining 10% of capacity can be used for manoeuvring. 
+		This will be documented in the battery section.
+		<br />
+		</p>
 			<h3>Battery</h3>
 			<p>
 			A <i>Rhino 610mAh 3S 11.1v 20C Lipoly Pack</i> is used that was purchase from <a href="http://hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=7308">hobby king</a>. Below are the specifications of this battery:
@@ -205,7 +210,6 @@ For the purpose of this documentation, we name this design <i>four leaved clover
 <br />
 Here are several pictures that were taking during the construction of this frame.
 <br />
-
 <table cellpadding="10" cellspacing="5" border="0" align="center" width="100%">
 <tr>
 <td><a href="images/FLC_Frame/FLC_Frame01.jpg"><img src="images/FLC_Frame/FLC_Frame01_thumbnail.jpeg" width="100" height="109" border="20"></a>
@@ -234,7 +238,7 @@ Here are several pictures that were taking during the construction of this frame
 </tr>
 </table>
 </p>
-
+<br />
 The video below shows testing the new frame with the 5 inch three blade props.<br />
 <iframe title="YouTube video player" width="425" height="349" src="http://www.youtube.com/embed/IQPc0Hj0-zw" frameborder="0" allowfullscreen></iframe>
 <br />
@@ -247,6 +251,7 @@ The video below shows testing the new frame with the 5 inch three blade props.<b
 			<p>For wireless communication with the quadcopter, a pair of XBee Modules and <i>Arduino XBee Shield</i> are used. 
 			The serial connection between the modules can be tested with a blinking LED light. 
 			The following video which is based on <a href="http://arduino.cc/en/Guide/ArduinoXbeeShield">this arduino xbee shield tutorial</a>, demonstrates the plug and play functionality of this modules.
+					
 			<iframe title="YouTube video player" width="425" height="349" src="http://www.youtube.com/embed/rVwRllgzPls" frameborder="0" allowfullscreen></iframe>
 			</p>
 
@@ -264,9 +269,9 @@ The video below shows testing the new frame with the 5 inch three blade props.<b
 			</section><!-- end of #content -->
 
 			<aside id="sidebar2"><!-- sidebar2 -->
-			<br/>
-			<br/>
-			<br/>
+			<br />
+			<br />
+			<br />
 				<h3>Quadcopter Resources</h3>
 					<ul>
 						<li><a href="http://aeroquad.com/">Aeroquad</a></li>
@@ -291,7 +296,7 @@ The video below shows testing the new frame with the 5 inch three blade props.<b
 						<li><a href="http://www.csc.uvic.ca/">Computer Science at UVic</a></li>
 					</ul>
 			
-		</aside><!-- end of sidebar -->
+			</aside><!-- end of sidebar -->
 
 	</section><!-- end of #main content and sidebar-->
 	

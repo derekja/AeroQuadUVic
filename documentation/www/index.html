@@ -71,15 +71,23 @@
 			<h3>Propeller (Prop)</h3>
 			<p>The initial propeller attempt was a 4.5x4.5E two bladed propeller. This is well below the motor specification size recommended on the website of the supplier, which called for a 7x5E propeller. The motors would not even spin this large propeller, though, so it can only be concluded that the website specification is incorrect.
 
-			The propeller tests were completed by attaching the airframe and motors to a weight, and placing this weight on a scale. The weight used was approximately the diameter of the arduino board, so airflow characteristics should be comparable to those during flight. The initial weight of the airframe, motors, arduino, ESCs, battery monitor, plus the weight, was 1763g. This was well above what the motors could be expected to lift, so the total lift was calculated as the difference between initial weight (with the motors stopped) and final weight (with the motors at full power.) Here is a video demonstratin a test using this technique:
+			The propeller tests were completed by attaching the airframe and motors to a weight, and placing this weight on a scale. 
+			The weight used was approximately the diameter of the arduino board, so airflow characteristics should be comparable to those during flight. 
+			The initial weight of the airframe, motors, arduino, ESCs, battery monitor, plus the weight, was 1763g. 
+			This was well above what the motors could be expected to lift, so the total lift was calculated as the difference between initial weight (with the motors stopped) and final weight (with the motors at full power.) 
+			Here is a video demonstrating a test using this technique:
 			<iframe title="Testing the lift force" width="425" height="349" src="http://www.youtube.com/embed/ZpDpEkwurGo" frameborder="0" allowfullscreen></iframe>
 Initial weight at 4.5x4.5E 1763g final weight 1400g
 <br />
 for a total thrust of 363g. This quickly falls off as the battery drains, so subsequent tests are to be completed only on a fully charged battery.
 <br />
-For additional test propellers, in most cases there is only a single propeller available. It is not feasible to run only one motor, because the tether to the weight is fixed and a single motor does not provide lift as much as it simply changes the balance and threatens to topple the weight. To address this, additional propeller tests are accomplished by means of running two opposing motors, but with only one new propeller attached. Since the difference in thrust of a propeller change will be a fractional proportion of the total lift, the lowest final weight will be presumed to be the propeller with most lift.
+For additional test propellers, in most cases there is only a single propeller available. 
+It is not feasible to run only one motor, because the tether to the weight is fixed and a single motor does not provide lift as much as it simply changes the balance and threatens to topple the weight. 
+To address this, additional propeller tests are accomplished by means of running two opposing motors, but with only one new propeller attached. 
+Since the difference in thrust of a propeller change will be a fractional proportion of the total lift, the lowest final weight will be presumed to be the propeller with most lift.
 <br />
 First, the original 4.5x4.5E propellers are run in this configuration.
+<!--TODO: add a picture of this props -->
 Initial weight at 4.5x4.5E 1763g final weight, two motors 1547g thrust = 216g
 
 Next, one of the propeller was replaced with a 8x4.5E two bladed propeller.
@@ -94,27 +102,25 @@ Next, one propeller was replaced with a 3 bladed 5 inch with less pitch (labelle
 <br />
 initial weight 1762g final weight 1515g thrust = 247g
 <br />
-
 Next the orange 6 inch propeller was run (GWS EP-6030)
-
 initial weight 1766g final weight 1530g thrust = 236g
-
-Of course, there is a confound between prop size and pitch. It is unknown what a 4.5 pitch 6 inch prop would do, and since the specification cannot be trusted, it is unclear which is preferred by this motor.
+Of course, there is a confound between prop size and pitch. 
+It is unknown what a 4.5 pitch 6 inch prop would do, and since the specification cannot be trusted, it is unclear which is preferred by this motor.
 <br />
 Finally, the GWS EP-4025 was run.
 
 Initial weight 1765g final weight 1536g thrust = 229g
 <br />
-
-The 5 inch 3-blade propeller seems to be the best performer for the size. The shallower pitch also seems to be an advantage. It is possible that these motors simply do not have sufficient torque to drive a higher pitch propeller.
-
+The 5 inch 3-blade propeller seems to be the best performer for the size. The shallower pitch also seems to be an advantage. 
+It is possible that these motors simply do not have sufficient torque to drive a higher pitch propeller.
 <br />
-Final configuration: 4 3 bladed 5 inch props with a 3.0 inch pitch. Model GWS EP-5030x3
-
+<h4>Final Configuration</h4> 
+Four 3 bladed 5 inch props with a 3.0 inch pitch. Model GWS EP-5030x3
 Initial weight 1758g final weight 1290g (first pulse, quickly drops to around 1370g sustained) thrust = 468g (peak) 388g (sustained)
-
-The goal is to get to lift capability with a maximum of 90% of motor thrust for a sustained period so that the remaining 10% of capacity can be used for manoeuvring. This will be documented in the battery section. </p>
-
+The goal is to get to lift capability with a maximum of 90% of motor thrust for a sustained period so that the remaining 10% of capacity can be used for manoeuvring. 
+This will be documented in the battery section. </p>
+<br />
+<br />
 			<h3>Battery</h3>
 			<p>
 			A <i>Rhino 610mAh 3S 11.1v 20C Lipoly Pack</i> is used that was purchase from <a href="http://hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=7308">hobby king</a>. Below are the specifications of this battery:
@@ -126,7 +132,9 @@ The goal is to get to lift capability with a maximum of 90% of motor thrust for 
 		<br />
 		<br />
 		<h4>Running Time</h4>
-With the 5 in. 3 blade propellers, a trial was made with the motors at 90% capacity. At this rate of discharge it takes 9 minutes to go from a full charge to a sustained low battery warning from the battery monitor. During that 9 minutes, the 90% motor lift capacity drops from 288g to 243g.
+With the 5 in. 3 blade propellers, a trial was made with the motors at 90% capacity. 
+At this rate of discharge it takes 9 minutes to go from a full charge to a sustained low battery warning from the battery monitor. 
+During that 9 minutes, the 90% motor lift capacity drops from 288g to 243g.
 <br />
 Recharge of the batteries from a full discharge at 1.6A takes approximately 30 minutes.
 <br />
@@ -182,7 +190,7 @@ Here are several pictures that were taking during the construction of this frame
 
 <table cellpadding="10" cellspacing="5" border="0" align="center" width="100%">
 <tr>
-<td><a href="images/FLC_Frame/FLC_Frame01.jpg"><img src="images/FLC_Frame/FLC_Frame01_thumbnail.jpeg" width="100" height="109" border="20" alt="Drawing the pattern on styrofoam" class="aligntop"></a>
+<td><a href="images/FLC_Frame/FLC_Frame01.jpg"><img src="images/FLC_Frame/FLC_Frame01_thumbnail.jpeg" width="100" height="109" border="20"></a>
 <br />1. Drawing the pattern on the one inch thick styrofoam</td>
 <td><a href="images/FLC_Frame/FLC_Frame02.jpg"><img src="images/FLC_Frame/FLC_Frame02_thumbnail.jpeg" width="100" height="104" border="20"></a>
 <br />2. Cutting the styrofoam with hot wire</td>

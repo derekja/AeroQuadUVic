@@ -44,7 +44,7 @@
 			
 <article>
 <h1>Quadcopter Build Log</h1>
-			<p>This document captures all the relevant efforts that were made in construction of this quadcopter project. The timeframe of the project is January 2011 to April2011. 
+			<p>This document captures all the relevant efforts that were made in construction of this quadcopter. The timeframe of the project is January 2011 to April2011. 
 
 			<!--TODO: The content list for this page will go here -->
 			</p>
@@ -54,19 +54,37 @@
 			<article>
 			<h2><a href="#">Hardware</a></h2>
 			<h3>Controller</h3>
-			<p>Arduino platform is selected for this project, mainly due to its open software and hardware nature which has reslted in availability of extensive technical information. As a result there are many tutorials and example project available for this platform. A list of arduino boards can be found <a href="http://arduino.cc/en/Main/Boards">here</a>. Many of these boards including <i>Arduino Uno</i> and <i>Arduino Mega</i> are perfectly capable of flying a quad copter. In this project, the Arduino compatible <a href="http://www.seeedstudio.com/depot/seeeduino-v221-atmega-328p-p-669.html?cPath=80&zenid=ddc5e83a38550b702d7aeebbb94512a5">Seeeduino</a> board is used; specifically, <i>Seeeduino Mega v1.1</i> mainly since it was available at hand.</p>
+			<p>Arduino platform is selected for this project, mainly due to its open software and hardware nature which has resulted in availability of extensive technical information. As a result there are many tutorials and example project available for this platform. A list of arduino boards can be found <a href="http://arduino.cc/en/Main/Boards">here</a>. Many of these boards including <i>Arduino Uno</i> and <i>Arduino Mega</i> are perfectly capable of flying a quad copter. In this project, the Arduino compatible <a href="http://www.seeedstudio.com/depot/seeeduino-v221-atmega-328p-p-669.html?cPath=80&zenid=ddc5e83a38550b702d7aeebbb94512a5">Seeeduino</a> board is used; specifically, <i>Seeeduino Mega v1.1</i> mainly since it was available at hand.</p>
 
 			<h3>Schematic</h3>
 			<img src="img/" alt="Schematic showing all electronic components of the system and how they are connected. " class="alignleft" />
 			<p></p>
-			<br/>
-			<h3>Brush-less Motor</h3>
+			<br />
+			<h3>Brushless Motor</h3>
 			<p>
-			<iframe title="Testing a brushless motor" width="425" height="349" src="http://www.youtube.com/embed/SB0L5wSDu6s" frameborder="0" allowfullscreen></iframe>
+			Many electric devices such as blow dryer and CPU fan use brushed direct current (DC) motors. 
+			They are called brushed since they use a carbon brush to keep the current flowing into the rotating section (called shaft or rotor) inside the motor. 
+			We use four brushless DC motors, specifically this motor. 
+			Brushless motors are suitable for this project since they deliver much higher revolutions per minute (RPM). 
+			Since they dont use brush to deliver current to the shaft, there is much less friction; therefore, they are much more efficient and can produce more torque. 
+
 			</p>
 
-			<h3>Electronic Speed Controller</h3>
-			<p></p>
+			<h3>Electronic Speed Controller (ESC)</h3>
+			<p>Four <i>plush 6amp brushless speed controllers</a> (Plush 6A) are used in this project.
+			<h4>Direction of rotation</h4>
+			The three wires from brushless motor can be connected to the three output wires of the speed controller in any order. 
+			However, reversing the direction of rotation of the motor is done by <strong>switching any two of these three wires</strong>. 
+			Therefore, it is a good idea to find a right order buy temporary connecting the wires and checking the rotation of motor.
+			The input signal to the brushless motor only defines the power at which the motor should operate or its RPM, but not the direction.
+			The signal that is needed by the ESC is equivalent to that of a servo motor.
+			Therefore the servo library can be used to operate an ESC using an arduino board.
+			The image below shows the charachteristics of this input signal to the ESC captures by an oscilloscope while the brushless motor is operating at about 70 percent power.
+			<a href="images/ESC_Input_Signal.JPG"><img src="images/ESC_Input_Signal_thumbnail.jpeg" width="256" height="192" alt="esc input signal captured by oscilloscope" /></a>
+			<br />
+			The video below shows a simple test of driving a brushless motor with an ESC.<br />
+			<iframe title="Testing a brushless motor" width="425" height="349" src="http://www.youtube.com/embed/SB0L5wSDu6s" frameborder="0" allowfullscreen></iframe>			
+			</p>
 
 			<h3>Propeller (Prop)</h3>
 			<p>The initial propeller attempt was a 4.5x4.5E two bladed propeller. This is well below the motor specification size recommended on the website of the supplier, which called for a 7x5E propeller. The motors would not even spin this large propeller, though, so it can only be concluded that the website specification is incorrect.
@@ -223,6 +241,13 @@ The video below shows testing the new frame with the 5 inch three blade props.<b
 <br />
 			<h3>Sensor</h3>
 			<p>A 9 degree of freedom sensor, which is a board with a magnetometer, accelerometer, and gyro is used on this quadcopter. 
+			</p>
+			
+			<h3>Wireless Communication</h3>
+			<p>For wireless communication with the quadcopter, a pair of XBee Modules and <i>Arduino XBee Shield</i> are used. 
+			The serial connection between the modules can be tested with a blinking LED light. 
+			The following video which is based on <a href="http://arduino.cc/en/Guide/ArduinoXbeeShield">this arduino xbee shield tutorial</a>, demonstrates the plug and play functionality of this modules.
+			<iframe title="YouTube video player" width="425" height="349" src="http://www.youtube.com/embed/rVwRllgzPls" frameborder="0" allowfullscreen></iframe>
 			</p>
 
 </article>

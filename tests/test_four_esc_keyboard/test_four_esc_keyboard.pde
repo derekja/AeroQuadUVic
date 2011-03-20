@@ -55,13 +55,13 @@ void setup() {
   Serial.begin(9600);
  
   //Attach servo motors to pins
-  p1.attach(9);
-  p2.attach(10);
-  p3.attach(11);
-  p4.attach(12);
+  p1.attach(2);
+  p2.attach(3);
+  p3.attach(5);
+  p4.attach(6);
   
   arm();
-  setAllSpeedTo(68);
+  setAllSpeedTo(60);
 }
 
 void loop() {
@@ -87,19 +87,19 @@ void loop() {
       Serial.println(p4Speed, DEC);
       break;
     case 'h':    
-      if(p1Speed > 68) p1Speed -= STEP;
+      if(p1Speed > 60) p1Speed -= STEP;
       Serial.println(p1Speed, DEC);
       break;
     case 'j':    
-      if(p2Speed > 68) p2Speed -= STEP;
+      if(p2Speed > 60) p2Speed -= STEP;
       Serial.println(p2Speed, DEC);
       break;
     case 'k':    
-      if(p3Speed > 68) p3Speed -= STEP;
+      if(p3Speed > 60) p3Speed -= STEP;
       Serial.println(p3Speed, DEC);
       break;
     case 'l':    
-      if(p4Speed > 68) p4Speed -= STEP;
+      if(p4Speed > 60) p4Speed -= STEP;
       Serial.println(p4Speed, DEC);
       break;
     case '1':
@@ -119,7 +119,7 @@ void loop() {
       break;
     default:
       // turn all the motors off
-      setAllSpeedTo(68);
+      setAllSpeedTo(60);
     }
   }
   setSpeed();

@@ -57,9 +57,10 @@
 			<p>Arduino platform is selected for this project, mainly due to its open software and hardware nature which has reslted in availability of extensive technical information. As a result there are many tutorials and example project available for this platform. A list of arduino boards can be found <a href="http://arduino.cc/en/Main/Boards">here</a>. Many of these boards including <i>Arduino Uno</i> and <i>Arduino Mega</i> are perfectly capable of flying a quad copter. In this project, the Arduino compatible <a href="http://www.seeedstudio.com/depot/seeeduino-v221-atmega-328p-p-669.html?cPath=80&zenid=ddc5e83a38550b702d7aeebbb94512a5">Seeeduino</a> board is used; specifically, <i>Seeeduino Mega v1.1</i> mainly since it was available at hand.</p>
 
 			<h3>Schematic</h3>
-			<img src="images/" alt="Schematic showing all electronic components of the system and how they are connected. " class="alignleft" /><p></p>
+			<img src="img/" alt="Schematic showing all electronic components of the system and how they are connected. " class="alignleft" />
+			<p></p>
 			<br/>
-			<h3>Brushless Motor</h3>
+			<h3>Brush-less Motor</h3>
 			<p>
 			<iframe title="Testing a brushless motor" width="425" height="349" src="http://www.youtube.com/embed/SB0L5wSDu6s" frameborder="0" allowfullscreen></iframe>
 			</p>
@@ -132,6 +133,15 @@ Recharge of the batteries from a full discharge at 1.6A takes approximately 30 m
 <br />
 <br />
 <h4>Battery Charger</h4>
+A <a href="http://hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=7386">GT A6</a> charger is used.
+This is an advanced charger that is capable of charging, discharging, and balancing several different types of batteries.
+The charger require an input voltage of 10~18v. In this project, recharge is accomplished through the use of a PC power supply. 
+A small wire shorting the green and black pins on the ATX connector are used to allow it to provide a 12V source to the GT Power A6-10 battery charger. 
+<br /><img src="" alt="TODO: Figure showing the configuration of battery charging station" >
+<br />
+It would be possible to charge the batteries at a higher rate, supposedly they can take up to 5x their discharge rate. 
+For anything over 2 times their discharge rate, though, <!-- TODO: reference this website --> one website was recommending to charge them in a ceramic mug because they have a tendency to explode. 
+Given this advice, a maximum charge rate of 2 times the discharge current was set.
 </p>
 
 			<h3>Sensor</h3>
@@ -188,10 +198,8 @@ Recharge of the batteries from a full discharge at 1.6A takes approximately 30 m
 
 			<section id="footer-outer-block">
 					<aside class="footer-segment">
-						
-						
+											
 					</aside>
-
 					
 					<aside class="footer-segment">
 					<!--TODO: add copyright and such in footnote -->

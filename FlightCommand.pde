@@ -77,16 +77,16 @@ void readPilotCommands() {
     receiver.setTransmitterTrim(YAW, receiver.getRaw(YAW));
   }
   
-  // Check Mode switch for Acro or Stable
-  if (receiver.getRaw(MODE) > 1500) {
-    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+  // Check Mode switch for Acro or Stable (warning, flipped from orig)
+  if (receiver.getRaw(MODE) < 1500) {
+    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined (AeroQuadUVic)
       if (flightMode == ACRO)
         digitalWrite(LED2PIN, HIGH);
     #endif
     flightMode = STABLE;
  }
   else {
-    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined (AeroQuadUVic)
       if (flightMode == STABLE)
         digitalWrite(LED2PIN, LOW);
     #endif

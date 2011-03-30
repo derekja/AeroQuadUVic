@@ -44,7 +44,7 @@
   #define PIANO_SW1 42
   #define PIANO_SW2 43
 #endif
-#ifdef AeroQuadMega_v2  
+#if defined(AeroQuadMega_v2) || defined(AeroQuadUVic)  
   #define LED2PIN 4
   #define LED3PIN 31
 #else

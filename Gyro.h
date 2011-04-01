@@ -45,7 +45,7 @@ public:
   int zeroGyroYawCount;
     
   Gyro(void){
-    sign[ROLL] = -1;
+    sign[ROLL] = 1;
     sign[PITCH] = -1;
     sign[YAW] = 1;
   }

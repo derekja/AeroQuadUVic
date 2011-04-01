@@ -274,11 +274,14 @@ public:
     Wire.send(0x02);
     Wire.endTransmission();
     Wire.requestFrom(accelAddress, 6);
-    for (byte axis = ROLL; axis < LASTAXIS; axis++) {
-      accelADC[axis] = accelZero[axis] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
-    //for (byte axis = XAXIS; axis < LASTAXIS; axis++) {
-      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
-    }
+      accelADC[ROLL] = accelZero[ROLL] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
+      accelData[ROLL] = filterSmooth(accelADC[ROLL] * accelScaleFactor, accelData[ROLL], smoothFactor);
+      accelADC[PITCH] = accelZero[PITCH] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
+      accelData[PITCH] = filterSmooth(accelADC[PITCH] * accelScaleFactor, accelData[PITCH], smoothFactor);
+      accelADC[YAW] = accelZero[YAW] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
+      accelData[YAW] = filterSmooth(accelADC[YAW] * accelScaleFactor, accelData[YAW], smoothFactor);
+
+
   }
 
   const int getFlightData(byte axis) {
@@ -675,6 +678,7 @@ public:
     accelZero[YAXIS] = readFloat(LEVELROLLCAL_ADR);
     accelZero[ZAXIS] = readFloat(LEVELZCAL_ADR);
     smoothFactor     = readFloat(ACCSMOOTH_ADR);
+        Serial.println(smoothFactor, DEC);
     
     // Check if accel is connected
     //if (readWhoI2C(accelAddress) != 0x03) // page 52 of datasheet
@@ -711,16 +715,33 @@ public:
   void measure(void) {
     
     int rawdata[3];
-    //double rawd[3];
+    int tmp;
+    double rawd[3];
     
     //ADXL.get_Gxyz(rawd);
 
     ADXL.readAccel(rawdata);
-    
-     for (byte axis = ROLL; axis < LASTAXIS; axis++) {
-      accelADC[axis] = accelZero[axis] - rawdata[axis];
-      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
-    }
+
+      //tmp = int(rawd[ROLL]*10000000);
+      accelADC[XAXIS]  = accelZero[XAXIS] - rawdata[YAXIS];
+          //Serial.print("accelADC     ");
+          //Serial.println(accelADC[XAXIS], DEC);
+      accelData[XAXIS] = filterSmooth(accelADC[XAXIS] * accelScaleFactor, accelData[XAXIS], smoothFactor);
+          //Serial.println(accelData[XAXIS], DEC);
+      accelADC[YAXIS] = accelZero[YAXIS] - rawdata[XAXIS];
+          //Serial.println(accelADC[YAXIS], DEC);
+      accelData[YAXIS] = filterSmooth(accelADC[YAXIS] * accelScaleFactor, accelData[YAXIS], smoothFactor);
+          //Serial.println(accelData[YAXIS], DEC);
+      accelADC[ZAXIS] = accelZero[ZAXIS] - rawdata[ZAXIS];
+      accelData[ZAXIS] = filterSmooth(accelADC[ZAXIS] * accelScaleFactor, accelData[ZAXIS], smoothFactor);
+
+
+//      accelADC[ROLL] = accelZero[ROLL] - rawdata[ROLL];
+//      accelData[ROLL] = filterSmooth(accelADC[ROLL] * accelScaleFactor, accelData[ROLL], smoothFactor);
+//      accelADC[PITCH] = accelZero[PITCH] - rawdata[PITCH];
+//      accelData[PITCH] = filterSmooth(accelADC[PITCH] * accelScaleFactor, accelData[PITCH], smoothFactor);
+//      accelADC[YAW] = accelZero[YAW] - rawdata[YAW];
+//      accelData[YAW] = filterSmooth(accelADC[YAW] * accelScaleFactor, accelData[YAW], smoothFactor);
     
 
   }

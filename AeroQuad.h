@@ -295,8 +295,8 @@ byte testSignal = LOW;
 #define XMITFACTOR_ADR 48
 #define GYROSMOOTH_ADR 52
 #define ACCSMOOTH_ADR 56
-#define LEVELPITCHCAL_ADR 64
-#define LEVELROLLCAL_ADR 60
+#define LEVELPITCHCAL_ADR 60
+#define LEVELROLLCAL_ADR 64
 #define LEVELZCAL_ADR 68
 #define FILTERTERM_ADR 72
 #define NVM_TRANSMITTER_SCALE_OFFSET_SMOOTH 76  // needs 8 channel with 3 entries of float (4 byte) -> 96 byte

@@ -143,12 +143,12 @@ private:
     #define RIGHTMOTORPIN  5
     #define LEFTMOTORPIN   6
     #define LASTMOTORPIN   7
-  #else
-    #define FRONTMOTORPIN  3
-    #define REARMOTORPIN   9
-    #define RIGHTMOTORPIN 10
-    #define LEFTMOTORPIN  11
-    #define LASTMOTORPIN  12
+//  #else
+//    #define FRONTMOTORPIN  3
+//    #define REARMOTORPIN   9
+//    #define RIGHTMOTORPIN 10
+//    #define LEFTMOTORPIN  11
+//    #define LASTMOTORPIN  12
   #endif
   int minCommand;
   byte pin;

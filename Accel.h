@@ -40,9 +40,9 @@ public:
   //unsigned long currentAccelTime, previousAccelTime;  // AKA changes to remove total Time from Honks smoothing changes
   
   Accel(void) {
-    sign[ROLL] = 1;
-    sign[PITCH] = 1;
-    sign[YAW] = 1;
+    sign[ROLL] = -1;
+    sign[PITCH] = -1;
+    sign[YAW] = -1;
     zAxis = 0;
   }
 

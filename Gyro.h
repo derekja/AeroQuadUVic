@@ -678,7 +678,10 @@ public:
     for (byte axis = ROLL; axis < LASTAXIS; axis++) {
       gyroADC[axis] = ((Wire.receive() << 8) | Wire.receive()) - gyroZero[axis];
       gyroData[axis] = filterSmooth(gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
+      //Serial.print("    ");
+      //Serial.print(gyroData[axis], DEC);
     }
+//Serial.println("  ");
 
     //calculateHeading();
     long int currentGyroTime = micros();

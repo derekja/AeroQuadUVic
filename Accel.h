@@ -40,7 +40,7 @@ public:
   //unsigned long currentAccelTime, previousAccelTime;  // AKA changes to remove total Time from Honks smoothing changes
   
   Accel(void) {
-    sign[ROLL] = 1;
+    sign[ROLL] = -1;
     sign[PITCH] = -1;
     sign[YAW] = -1;
     zAxis = 0;
@@ -658,7 +658,8 @@ public:
   Accel_AeroQuadUVic() : Accel(){
 
 //    accelAddress = 0x40; // page 54 and 61 of datasheet
-    accelScaleFactor = G_2_MPS2(3.9/4096.0);  //  g per LSB @ +/- 2g range
+//    accelScaleFactor = G_2_MPS2(3.9/4096.0);  //  g per LSB @ +/- 2g range
+accelScaleFactor = G_2_MPS2(3900);  //  g per LSB @ +/- 2g range
   }
   
   void initialize(void) {

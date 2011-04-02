@@ -685,23 +685,26 @@ class Gyro_AeroQuadUVic : public Gyro {
 private:
   int gyroAddress;
   long int previousGyroTime;
+  int gyroLastADC;
   
 public:
   Gyro_AeroQuadUVic() : Gyro() {
     gyroAddress = 0x68;
     gyroFullScaleOutput = 2000.0;   // ITG3200 full scale output = +/- 2000 deg/sec
     gyroScaleFactor = radians(1.0 / 14.375);  //  ITG3200 14.375 LSBs per °/sec
-    lastReceiverYaw=0;
+ /*   lastReceiverYaw=0;
     yawAge=0;
     positiveGyroYawCount=1;
     negativeGyroYawCount=1;
-    zeroGyroYawCount=1;
+    zeroGyroYawCount=1; */
     previousGyroTime = micros();
   }
   
   void initialize(void) {
     this->_initialize(0,1,2);
     
+    gyroLastADC = 0;  // initalize for rawHeading, may be able to be removed in the future
+ 
     Serial.println("in AeroQuadUVic gyro setup");
     Serial.println("test addresses 0x68, 0x53, 0x1e, 0x3D");
     Serial.println(gyroScaleFactor, DEC);
@@ -722,24 +725,39 @@ public:
     updateRegisterI2C(gyroAddress, 0x3E, 0x01); // use internal oscillator 
   }
   
-  void measure(void) {
+    void measure(void) {
     sendByteI2C(gyroAddress, 0x1D);
     Wire.requestFrom(gyroAddress, 6);
 
     for (byte axis = ROLL; axis < LASTAXIS; axis++) {
-      gyroADC[axis] = ((Wire.receive() << 8) | Wire.receive()) - gyroZero[axis];
-      gyroData[axis] = filterSmooth(gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
-      //Serial.print("    ");
-      //Serial.print(gyroData[axis], DEC);
+      if (axis == ROLL)
+        gyroADC[axis] = ((Wire.receive() << 8) | Wire.receive()) - gyroZero[axis];
+      else
+        gyroADC[axis] = gyroZero[axis] - ((Wire.receive() << 8) | Wire.receive());
+      gyroData[axis] = filterSmooth((float)gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
     }
-//Serial.println("  ");
 
     //calculateHeading();
+    // gyroLastADC can maybe replaced with Zero, but will leave as is for now
+    // this provides a small guard band for the gyro on Yaw before it increments or decrements the rawHeading 
+    
+    //calculateHeading();
     long int currentGyroTime = micros();
-    rawHeading += -gyroADC[YAW] * gyroScaleFactor * ((currentGyroTime - previousGyroTime) / 1000000.0);
-    //Serial.println(rawHeading);
+    if ((gyroADC[YAW] - gyroLastADC) > 3 || (gyroADC[YAW] - gyroLastADC) < -3) {
+      //Serial.print(gyroADC[YAW]);
+      //Serial.print(",");
+      //Serial.print(rawHeading);
+      //Serial.print(",");
+      //Serial.print(currentGyroTime - previousGyroTime);      
+      //Serial.print(",");
+      rawHeading += gyroADC[YAW] * gyroScaleFactor * ((currentGyroTime - previousGyroTime) / 1000000.0);
+      //Serial.print(rawHeading);
+      //Serial.println();
+    }
     previousGyroTime = currentGyroTime;
+      //gyroLastADC = gyroADC[YAW];
 
+/*
     // ************ Correct for gyro drift by FabQuad **************
     // ************ http://aeroquad.com/entry.php?4-  **************
     // Modified FabQuad's approach to use yaw transmitter command instead of checking accelerometer
@@ -757,8 +775,10 @@ public:
         }
         yawAge = 0;
         if (zeroGyroYawCount + negativeGyroYawCount + positiveGyroYawCount > 50) {
-          if (3*negativeGyroYawCount >= 4*(zeroGyroYawCount+positiveGyroYawCount)) gyroZero[YAW]--;  // enough signals the gyroZero is too low
-          if (3*positiveGyroYawCount >= 4*(zeroGyroYawCount+negativeGyroYawCount)) gyroZero[YAW]++;  // enough signals the gyroZero is too high
+          if (3*negativeGyroYawCount >= 4*(zeroGyroYawCount+positiveGyroYawCount)) 
+            gyroZero[YAW]--;  // enough signals the gyroZero is too low
+          if (3*positiveGyroYawCount >= 4*(zeroGyroYawCount+negativeGyroYawCount)) 
+            gyroZero[YAW]++;  // enough signals the gyroZero is too high
           zeroGyroYawCount=0;
           negativeGyroYawCount=0;
           positiveGyroYawCount=0;
@@ -769,14 +789,18 @@ public:
       lastReceiverYaw = receiverYaw;
       yawAge = 0;
     }
+    */
   }
-  
+
+   
+  // returns raw ADC data from the Gyro centered on zero +/- values
   const int getFlightData(byte axis) {
-    int reducedData;
-    
-    reducedData = getRaw(axis) >> 3;
+    //int reducedData = getRaw(axis) >> 3;
     //if ((reducedData < 5) && (reducedData > -5)) reducedData = 0;
-    return reducedData;
+    if (axis == PITCH)
+      return -(getRaw(axis) >> 3);
+    else
+      return (getRaw(axis) >> 3);
   }
 
   void calibrate() {
@@ -799,4 +823,3 @@ public:
   }
 };
 #endif
-

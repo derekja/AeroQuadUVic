@@ -659,7 +659,7 @@ public:
 
 //    accelAddress = 0x40; // page 54 and 61 of datasheet
 //    accelScaleFactor = G_2_MPS2(3.9/4096.0);  //  g per LSB @ +/- 2g range
-accelScaleFactor = G_2_MPS2(3900);  //  g per LSB @ +/- 2g range
+accelScaleFactor = G_2_MPS2(0.0039);  //  g per LSB @ +/- 2g range
 //accelScaleFactor = G_2_MPS2(2500);  //  g per LSB @ +/- 2g range
 
   }
@@ -726,12 +726,12 @@ accelScaleFactor = G_2_MPS2(3900);  //  g per LSB @ +/- 2g range
     ADXL.readAccel(rawdata);
 
       //tmp = int(rawd[ROLL]*10000000);
-      accelADC[XAXIS]  = accelZero[XAXIS] - rawdata[YAXIS];
+      accelADC[XAXIS]  = accelZero[XAXIS] - rawdata[XAXIS];
           //Serial.print("accelADC     ");
           //Serial.println(accelADC[XAXIS], DEC);
       accelData[XAXIS] = filterSmooth(accelADC[XAXIS] * accelScaleFactor, accelData[XAXIS], smoothFactor);
           //Serial.println(accelData[XAXIS], DEC);
-      accelADC[YAXIS] = accelZero[YAXIS] - rawdata[XAXIS];
+      accelADC[YAXIS] = accelZero[YAXIS] - rawdata[YAXIS];
           //Serial.println(accelADC[YAXIS], DEC);
           //Serial.print("    ");
       accelData[YAXIS] = filterSmooth(accelADC[YAXIS] * accelScaleFactor, accelData[YAXIS], smoothFactor);

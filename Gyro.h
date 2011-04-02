@@ -639,7 +639,6 @@ public:
     gyroAddress = 0x68;
     gyroFullScaleOutput = 2000.0;   // ITG3200 full scale output = +/- 2000 deg/sec
     gyroScaleFactor = radians(1.0 / 14.375);  //  ITG3200 14.375 LSBs per °/sec
-    
     lastReceiverYaw=0;
     yawAge=0;
     positiveGyroYawCount=1;
@@ -653,7 +652,7 @@ public:
     
     Serial.println("in AeroQuadUVic gyro setup");
     Serial.println("test addresses 0x68, 0x53, 0x1e, 0x3D");
-    
+    Serial.println(gyroScaleFactor, DEC);
     Serial.println(readWhoI2C(gyroAddress),HEX);
     //Serial.println(readWhoI2C(0x69),HEX);
     Serial.println(readWhoI2C(0x53),HEX);

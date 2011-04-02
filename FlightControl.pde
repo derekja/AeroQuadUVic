@@ -77,7 +77,7 @@ void processAeroQuadStableMode(void)
   // Check if pilot commands are not in hover, don't auto trim
   if ((abs(receiver.getTrimData(ROLL)) > levelOff) || (abs(receiver.getTrimData(PITCH)) > levelOff)) {
     zeroIntegralError();
-    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined (AeroQuadUVic)
       digitalWrite(LED2PIN, LOW);
     #endif
     #ifdef APM_OP_CHR
@@ -87,7 +87,7 @@ void processAeroQuadStableMode(void)
   else {
     PID[LEVELROLL].integratedError = constrain(PID[LEVELROLL].integratedError + (((receiver.getAngle(ROLL) - degrees(flightAngle->getData(ROLL))) * G_Dt) * PID[LEVELROLL].I), -levelLimit, levelLimit);
     PID[LEVELPITCH].integratedError = constrain(PID[LEVELPITCH].integratedError + (((receiver.getAngle(PITCH) + degrees(flightAngle->getData(PITCH))) * G_Dt) * PID[LEVELROLL].I), -levelLimit, levelLimit);
-    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+    #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined (AeroQuadUVic)
       digitalWrite(LED2PIN, HIGH);
     #endif
     #ifdef APM_OP_CHR

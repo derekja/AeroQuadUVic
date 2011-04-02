@@ -33,11 +33,12 @@
 //#define AeroQuad_v18        // Arduino 2009 with AeroQuad Shield v1.8
 //#define AeroQuad_Wii        // Arduino 2009 with Wii Sensors and AeroQuad Shield v1.x
 //#define AeroQuadMega_v1     // Arduino Mega with AeroQuad Shield v1.7 and below
-#define AeroQuadMega_v2     // Arduino Mega with AeroQuad Shield v2.x
+//#define AeroQuadMega_v2     // Arduino Mega with AeroQuad Shield v2.x
 //#define AeroQuadMega_Wii    // Arduino Mega with Wii Sensors and AeroQuad Shield v2.x
 //#define ArduCopter          // ArduPilot Mega (APM) with APM Sensor Board
 //#define AeroQuadMega_CHR6DM // Clean Arduino Mega with CHR6DM as IMU/heading ref.
 //#define APM_OP_CHR6DM       // ArduPilot Mega with CHR6DM as IMU/heading ref., Oilpan for barometer (just uncomment AltitudeHold for baro), and voltage divider
+#define AeroQuadUVic          // UVic variant with Arduino Mega 1280 and 9DOF sensor stick with XBee radio
 
 /****************************************************************************
  *********************** Define Flight Configuration ************************
@@ -58,8 +59,8 @@
 #define UseAQStable // Enable the older (pre 2.3) AeroQuad Stable mode
 //#define UseAttitudeHold // Enable the new for 2.3 Attitude hold mode
 #define HeadingMagHold // Enables HMC5843 Magnetometer, gets automatically selected if CHR6DM is defined
-#define AltitudeHold // Enables BMP085 Barometer (experimental, use at your own risk)
-#define BattMonitor //define your personal specs in BatteryMonitor.h! Full documentation with schematic there
+//#define AltitudeHold // Enables BMP085 Barometer (experimental, use at your own risk)
+//#define BattMonitor //define your personal specs in BatteryMonitor.h! Full documentation with schematic there
 //#define WirelessTelemetry  // Enables Wireless telemetry on Serial3  // Wireless telemetry enable
 #define BinaryWrite // Enables fast binary transfer of flight data to Configurator
 
@@ -288,6 +289,21 @@
   #endif
 #endif
 
+#ifdef AeroQuadUVic
+  Receiver_AeroQuadMega receiver;
+  Motors_PWMtimer motors;
+  Accel_AeroQuadUVic accel;
+  Gyro_AeroQuadUVic gyro;
+  #include "FlightAngle.h"
+  FlightAngle_DCM tempFlightAngle;
+  FlightAngle *flightAngle = &tempFlightAngle;
+  #ifdef HeadingMagHold
+    #include "Compass.h"
+    Magnetometer_HMC5843 compass;
+  #endif
+// removed barometer, battery monitor, and camera control sections from the V2 definitions since we are not implementing those
+#endif
+
 #ifdef XConfig
   void (*processFlightControl)() = &processFlightControlXMode;
 #endif
@@ -320,7 +336,7 @@ void setup() {
     Serial1.begin(BAUD);
     PORTD = B00000100;
   #endif
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuadUVic)
     pinMode(LED2PIN, OUTPUT);
     digitalWrite(LED2PIN, LOW);
     pinMode(LED3PIN, OUTPUT);
@@ -346,10 +362,10 @@ void setup() {
     pinMode(LED_Green, OUTPUT);
   #endif
   
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Wii) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM) || defined(ArduCopter)
+  #if defined(AeroQuad_v18) || defined(AeroQuadUVic) || defined(AeroQuadMega_v2) || defined(AeroQuad_Wii) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM) || defined(ArduCopter)
     Wire.begin();
   #endif
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuadUVic)
     // Recommendation from Mgros to increase I2C speed to 400kHz
     // http://aeroquad.com/showthread.php?991-AeroQuad-Flight-Software-v2.0&p=11262&viewfull=1#post11262
     TWBR = 12;
@@ -407,6 +423,8 @@ void setup() {
     camera.setmCameraPitch(11.11);
     camera.setCenterPitch(1300);
   #endif
+  
+  Serial.println("end setup");
   
   previousTime = micros();
   digitalWrite(LEDPIN, HIGH);

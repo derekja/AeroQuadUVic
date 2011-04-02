@@ -1,4 +1,4 @@
-/*
+  /*
   AeroQuad v2.3 - March 2011
   www.AeroQuad.com
   Copyright (c) 2011 Ted Carancho.  All rights reserved.
@@ -289,7 +289,7 @@ public:
 /******************************************************/
 /*************** AeroQuad Mega PCINT ******************/
 /******************************************************/
-#if defined(AeroQuadMega_v1) || defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM)
+#if defined(AeroQuadMega_v1) || defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM) || defined(AeroQuadUVic)
 volatile uint8_t *port_to_pcmask[] = {
   &PCMSK0,
   &PCMSK1,
@@ -354,12 +354,15 @@ SIGNAL(PCINT2_vect) {
   MegaPcIntISR();
 }
 
-#ifdef AeroQuadMega_v1
+//#ifdef AeroQuadMega_v1
   // arduino pins 67, 65, 64, 66, 63, 62
-  static byte receiverPin[6] = {5, 3, 2, 4, 1, 0}; // bit number of PORTK used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
-#else
+  //static byte receiverPin[6] = {5, 3, 2, 4, 1, 0}; // bit number of PORTK used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
+#ifdef AeroQuadUVic
+  // arduino pins 67, 65, 64, 66, 63, 62
+  static byte receiverPin[6] = {0, 1, 3, 2, 4, 5}; // bit number of PORTK used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
+//#else
  //arduino pins 63, 64, 65, 62, 66, 67
-  static byte receiverPin[6] = {1, 2, 3, 0, 4, 5}; // bit number of PORTK used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
+  //static byte receiverPin[6] = {1, 2, 3, 0, 4, 5}; // bit number of PORTK used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
 #endif
 
 class Receiver_AeroQuadMega : public Receiver {

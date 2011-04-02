@@ -143,6 +143,7 @@ public:
     }
 
     measure(0.0, 0.0);  // Assume 1st measurement at 0 degrees roll and 0 degrees pitch
+        Serial.println("adding compass");
   }
   
   ////////////////////////////////////////////////////////////////////////////////

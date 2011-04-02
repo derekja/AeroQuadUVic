@@ -137,18 +137,18 @@ public:
 /******************************************************/
 class Motors_PWM : public Motors {
 private:
-  #if defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined (AeroQuadMega_CHR6DM)
+  #if defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined (AeroQuadMega_CHR6DM) || defined (AeroQuadUVic)
     #define FRONTMOTORPIN  2
     #define REARMOTORPIN   3
     #define RIGHTMOTORPIN  5
     #define LEFTMOTORPIN   6
     #define LASTMOTORPIN   7
-  #else
-    #define FRONTMOTORPIN  3
-    #define REARMOTORPIN   9
-    #define RIGHTMOTORPIN 10
-    #define LEFTMOTORPIN  11
-    #define LASTMOTORPIN  12
+//  #else
+//    #define FRONTMOTORPIN  3
+//    #define REARMOTORPIN   9
+//    #define RIGHTMOTORPIN 10
+//    #define LEFTMOTORPIN  11
+//    #define LASTMOTORPIN  12
   #endif
   int minCommand;
   byte pin;
@@ -313,7 +313,7 @@ public:
 #ifdef CHR6DM_FAKE_MOTORS
 class Motors_PWM_Fake : public Motors {
 private:
-  #if defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined (AeroQuadMega_CHR6DM)
+  #if defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined (AeroQuadMega_CHR6DM) || defined (AeroQuadUVic)
     #define FRONTMOTORPIN 2
     #define REARMOTORPIN 3
     #define RIGHTMOTORPIN 5

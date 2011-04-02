@@ -18,6 +18,9 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>. 
 */
 
+#include "ADXL345.h"
+
+
 class Accel {
 public:
   float accelScaleFactor;
@@ -36,9 +39,9 @@ public:
   byte rollChannel, pitchChannel, zAxisChannel;
   
   Accel(void) {
-    sign[ROLL] = 1;
-    sign[PITCH] = 1;
-    sign[YAW] = 1;
+    sign[ROLL] = -1;
+    sign[PITCH] = -1;
+    sign[YAW] = -1;
     zAxis = 0;
   }
 
@@ -244,8 +247,8 @@ public:
         accelADC[axis] = ((Wire.receive()|(Wire.receive() << 8)) >> 2) - accelZero[axis];
       else
         accelADC[axis] = accelZero[axis] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
-      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
-    }
+
+
   }
 
   const int getFlightData(byte axis) {
@@ -576,5 +579,149 @@ public:
     previousTime = currentTime;
   } 
 */  
+};
+#endif
+
+/******************************************************/
+/************ AeroQuadUVic Accelerometer ***************/
+/******************************************************/
+#if defined(AeroQuadUVic)
+class Accel_AeroQuadUVic : public Accel {
+private:
+  int accelAddress;
+     ADXL345 ADXL;
+  
+public:
+  Accel_AeroQuadUVic() : Accel(){
+
+//    accelAddress = 0x40; // page 54 and 61 of datasheet
+//    accelScaleFactor = G_2_MPS2(3.9/4096.0);  //  g per LSB @ +/- 2g range
+accelScaleFactor = G_2_MPS2(0.0039);  //  g per LSB @ +/- 2g range
+//accelScaleFactor = G_2_MPS2(2500);  //  g per LSB @ +/- 2g range
+
+  }
+  
+  void initialize(void) {
+
+    ADXL.powerOn();
+    ADXL.setLowPower(false);
+    Serial.println("Here");
+    ADXL.set_bw(ADXL345_BW_25);
+    Serial.print("BW_OK? ");
+    Serial.println(ADXL.status, DEC);
+    ADXL.setRangeSetting(2);
+  
+    accelOneG        = readFloat(ACCEL1G_ADR);
+    Serial.println(accelOneG, DEC);
+    accelZero[XAXIS] = readFloat(LEVELPITCHCAL_ADR);
+    Serial.println(accelZero[XAXIS], DEC);
+    accelZero[YAXIS] = readFloat(LEVELROLLCAL_ADR);
+    accelZero[ZAXIS] = readFloat(LEVELZCAL_ADR);
+    smoothFactor     = readFloat(ACCSMOOTH_ADR);
+        Serial.println(smoothFactor, DEC);
+    
+    // Check if accel is connected
+    //if (readWhoI2C(accelAddress) != 0x03) // page 52 of datasheet
+    //  Serial.println("Accelerometer not found!");
+
+    // Thanks to SwiftingSpeed for updates on these settings
+    // http://aeroquad.com/showthread.php?991-AeroQuad-Flight-Software-v2.0&p=11207&viewfull=1#post11207
+    //updateRegisterI2C(accelAddress, 0x10, 0xB6); //reset device
+    //delay(10);  //sleep 10 ms after reset (page 25)
+
+    // In datasheet, summary register map is page 21
+    // Low pass filter settings is page 27
+    // Range settings is page 28
+    //updateRegisterI2C(accelAddress, 0x0D, 0x10); //enable writing to control registers
+    //sendByteI2C(accelAddress, 0x20); // register bw_tcs (bits 4-7)
+    //data = readByteI2C(accelAddress); // get current register value
+    //updateRegisterI2C(accelAddress, 0x20, data & 0x0F); // set low pass filter to 10Hz (value = 0000xxxx)
+
+    // From page 27 of BMA180 Datasheet
+    //  1.0g = 0.13 mg/LSB
+    //  1.5g = 0.19 mg/LSB
+    //  2.0g = 0.25 mg/LSB
+    //  3.0g = 0.38 mg/LSB
+    //  4.0g = 0.50 mg/LSB
+    //  8.0g = 0.99 mg/LSB
+    // 16.0g = 1.98 mg/LSB
+    //sendByteI2C(accelAddress, 0x35); // register offset_lsb1 (bits 1-3)
+    //data = readByteI2C(accelAddress);
+    //data &= 0xF1;
+    //data |= 0x04; // Set range select bits for +/-2g
+    //updateRegisterI2C(accelAddress, 0x35, data);
+  }
+  
+  void measure(void) {
+    
+    int rawdata[3];
+    int tmp;
+    double rawd[3];
+    
+    //ADXL.get_Gxyz(rawd);
+
+    ADXL.readAccel(rawdata);
+
+      //tmp = int(rawd[ROLL]*10000000);
+      accelADC[XAXIS]  = accelZero[XAXIS] - rawdata[XAXIS];
+          //Serial.print("accelADC     ");
+          //Serial.println(accelADC[XAXIS], DEC);
+      accelData[XAXIS] = filterSmooth(accelADC[XAXIS] * accelScaleFactor, accelData[XAXIS], smoothFactor);
+          //Serial.println(accelData[XAXIS], DEC);
+      accelADC[YAXIS] = accelZero[YAXIS] - rawdata[YAXIS];
+          //Serial.println(accelADC[YAXIS], DEC);
+          //Serial.print("    ");
+      accelData[YAXIS] = filterSmooth(accelADC[YAXIS] * accelScaleFactor, accelData[YAXIS], smoothFactor);
+          //Serial.println(accelData[YAXIS], DEC);
+      accelADC[ZAXIS] = accelZero[ZAXIS] - rawdata[ZAXIS];
+      accelData[ZAXIS] = filterSmooth(accelADC[ZAXIS] * accelScaleFactor, accelData[ZAXIS], smoothFactor);
+
+
+//      accelADC[ROLL] = accelZero[ROLL] - rawdata[ROLL];
+//      accelData[ROLL] = filterSmooth(accelADC[ROLL] * accelScaleFactor, accelData[ROLL], smoothFactor);
+//      accelADC[PITCH] = accelZero[PITCH] - rawdata[PITCH];
+//      accelData[PITCH] = filterSmooth(accelADC[PITCH] * accelScaleFactor, accelData[PITCH], smoothFactor);
+//      accelADC[YAW] = accelZero[YAW] - rawdata[YAW];
+//      accelData[YAW] = filterSmooth(accelADC[YAW] * accelScaleFactor, accelData[YAW], smoothFactor);
+    
+
+  }
+
+  const int getFlightData(byte axis) {
+    if (axis == ROLL)
+      return -getRaw(YAXIS) >> 3;
+    if (axis == PITCH)
+      return -getRaw(XAXIS) >> 3;
+    if (axis == ZAXIS)
+      return -getRaw(ZAXIS) >> 3;
+  }
+  
+  // Allows user to zero accelerometers on command
+  void calibrate(void) {  
+    int findZero[FINDZERO];
+    int dataAddress;
+    int rawdata[3];
+    
+    for (byte calAxis = XAXIS; calAxis < ZAXIS; calAxis++) {
+       for (int i=0; i<FINDZERO; i++) {
+        ADXL.readAccel(rawdata);
+        findZero[i] = rawdata[calAxis];
+        delay(10);
+      }
+      accelZero[calAxis] = findMedian(findZero, FINDZERO);
+    }
+
+    // replace with estimated Z axis 0g value (dj- why??)
+    accelZero[ZAXIS] = (accelZero[XAXIS] + accelZero[YAXIS]) / 2;
+    // store accel value that represents 1g
+    measure();
+    accelOneG = -accelData[ZAXIS];
+     
+    writeFloat(accelOneG,        ACCEL1G_ADR);
+    writeFloat(accelZero[XAXIS], LEVELPITCHCAL_ADR);
+    writeFloat(accelZero[YAXIS], LEVELROLLCAL_ADR);
+    writeFloat(accelZero[ZAXIS], LEVELZCAL_ADR);
+  }
+
 };
 #endif
